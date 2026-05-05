@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="auth-page d-flex align-items-center justify-content-center min-vh-100">
+    <div class="auth-card p-5 shadow-lg rounded-4">
+        <div class="text-center mb-4">
+            <h1 class="fw-bold">Create Account</h1>
+            <p class="text-muted">Start using AI-powered resume feedback and history tracking.</p>
+        </div>
+        <form method="POST" action="/signup" class="mb-4">
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" name="email" class="form-control form-control-lg" placeholder="Email address" required>
+            </div>
+            <div class="mb-4">
+                <label class="form-label">Password</label>
+                <input type="password" name="password" class="form-control form-control-lg" placeholder="Password" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg w-100">Signup</button>
+        </form>
+        <p class="text-center text-muted mb-0">Already have an account? <a href="/login" class="text-decoration-none">Login</a></p>
+    </div>
+</div>
+
+{% endblock %}

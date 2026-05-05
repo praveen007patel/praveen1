@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container-main">
+    <h2 class="text-center text-white mb-4">Analysis History</h2>
+
+    {% if reports %}
+        {% for r in reports %}
+            <div class="card mb-3 p-3">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <div>
+                        <strong>Report #{{ r.id }}</strong>
+                        <span class="text-muted">– {{ r.role | title }}</span>
+                    </div>
+                    <span class="badge bg-success">{{ r.score }}</span>
+                </div>
+                <p class="mb-1"><strong>Detected skills:</strong> {{ r.detected | join(', ') }}</p>
+                <p class="mb-1"><strong>Missing skills:</strong> {{ r.missing | join(', ') }}</p>
+                <p class="mb-1"><strong>Resume preview:</strong> {{ r.resume_preview }}</p>
+                <div class="d-flex gap-2 mb-3">
+                    <a href="/history/{{ r.id }}" class="btn btn-primary btn-sm">View Details</a>
+                    <form method="POST" action="/history/delete/{{ r.id }}" onsubmit="return confirm('Delete this report?');">
+                        <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
+                    </form>
+                </div>
+                <details>
+                    <summary>Learning roadmap</summary>
+                    <ul class="mt-2">
+                        {% for step in r.roadmap %}
+                            <li>{{ step }}</li>
+                        {% endfor %}
+                    </ul>
+                </details>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="alert alert-info">No history available yet. Analyze a resume to save your first report.</div>
+    {% endif %}
+</div>
+
+{% endblock %}

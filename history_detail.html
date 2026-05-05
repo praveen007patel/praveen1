@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="card mb-4 p-4 shadow-sm">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <h2>Report #{{ report.id }}</h2>
+            <p class="text-muted mb-0">Role: {{ result.get('Role', 'Unknown') | title }}</p>
+        </div>
+        <div class="text-end">
+            <span class="badge bg-success fs-6">{{ result.get('Score', 'N/A') }}</span>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <h5>Detected Skills</h5>
+        {% for skill in result.get('Detected Skills', []) %}
+            <span class="badge bg-success me-1 mb-1">{{ skill }}</span>
+        {% endfor %}
+    </div>
+
+    <div class="mb-3">
+        <h5>Missing Skills</h5>
+        {% for skill in result.get('Missing Skills', []) %}
+            <span class="badge bg-danger me-1 mb-1">{{ skill }}</span>
+        {% endfor %}
+    </div>
+
+    <div class="mb-3">
+        <h5>Improvement Tips</h5>
+        <ul>
+            {% for tip in result.get('Improvement Tips', []) %}
+                <li>{{ tip }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <h5>Learning Roadmap</h5>
+            <ul>
+                {% for step in result.get('Roadmap', []) %}
+                    <li>{{ step }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <h5>Interview Questions</h5>
+            <ul>
+                {% for q in result.get('Interview Questions', []) %}
+                    <li>{{ q }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <h5>Resume Preview</h5>
+        <div class="p-3 bg-light rounded">{{ report.resume_text }}</div>
+    </div>
+
+    <div class="mt-4 d-flex gap-2">
+        <a href="/history" class="btn btn-secondary">Back to History</a>
+        <form method="POST" action="/history/delete/{{ report.id }}" onsubmit="return confirm('Delete this report?');">
+            <button type="submit" class="btn btn-danger">Delete Report</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
